@@ -1,0 +1,76 @@
+body {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#playingfield {
+    width: 700px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#score-board {
+    width: 200px;
+    margin-right: 20px;
+}
+
+table {
+   border-collapse: collapse;
+   border: 2px solid black;
+   text-align: left;
+}
+  
+th, td {
+   border: 1px solid black;
+}
+
+#container1 {
+    /* margin: 0 auto; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 100px;
+    background-color: blue;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#container2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 100px;
+    background-color: rgba(1, 1, 15, 0.637);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.die {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    color: white;
+    background-size: cover;
+    cursor: grab;
+}
+
+.rolldie {
+    animation-name: rolldice;
+    animation-duration: 1s;
+}
+
+@keyframes rolldice {
+    100% {transform: rotate(360deg)}
+}
+
+button {
+    width: 150px;
+    height: 40px;
+    background-color: rgb(235, 74, 74);
+    color: white;
+    border-radius: 5px;
+}

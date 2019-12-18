@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drag</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./javascript/script.js" defer></script>
+</head>
+
+<body>
+<h1>YAHTZEE!</h1>
+    <div id="playingfield">
+
+        <div>
+            <table id="score-board">
+                <tr>
+                    <th></th>
+                    <th>score</th>
+                </tr>
+                <tr>
+                    <td id="enen-tag">Enen</td>
+                    <td id="enen"></td>
+                </tr>
+                <tr>
+                    <td id="tweeen-tag">Tweeën</td>
+                    <td id="tweeen"></td>
+                </tr>
+                <tr>
+                    <td id="drieen-tag">Drieën</td>
+                    <td id="drieen"></td>
+                </tr>
+                <tr>
+                    <td id="vieren-tag">Vieren</td>
+                    <td id="vieren"></td>
+                </tr>
+                <tr>
+                    <td id="vijfen-tag">Vijfen</td>
+                    <td id="vijfen"></td>
+                </tr>
+                <tr>
+                    <td id="zessen-tag">Zessen</td>
+                    <td id="zessen"></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Sub-totaal</td>
+                    <td id="subtotaalboven"></td>
+                </tr>
+                <tr>
+                    <td>Bonus</td>
+                    <td id="bonus"></td>
+                </tr>
+                <tr>
+                    <td>Totaal boven</td>
+                    <td id="totaalboven"></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td id="threeoak-tag">Three-of-a-kind</td>
+                    <td id="threeoak"></td>
+                </tr>
+                <tr>
+                    <td id="fouroak-tag">Four-of-a-kind</td>
+                    <td id="fouroak"></td>
+                </tr>
+                <tr>
+                    <td id="fullhouse-tag">Full-house</td>
+                    <td id="fullhouse"></td>
+                </tr>
+                <tr>
+                    <td id="kleinestraat-tag">Kleine straat</td>
+                    <td id="kleinestraat"></td>
+                </tr>
+                <tr>
+                    <td id="grotestraat-tag">Grote straat</td>
+                    <td id="grotestraat"></td>
+                </tr>
+                <tr>
+                    <td id="yahtzee-tag">Yahtzee</td>
+                    <td id="yahtzee"></td>
+                </tr>
+                <tr>
+                    <td id="vrijekeus-tag">Vrije keus</td>
+                    <td id="vrijekeus"></td>
+                </tr>
+                <tr>
+                    <td></td><td></td>
+                </tr>
+                <tr>
+                    <td>Totaal onder</td>
+                    <td id="subtotaalonder"></td>
+                </tr>
+                <tr>
+                    <td>Score</td>
+                    <td id="totaalscore"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="dice-fields">
+
+            <div id="container1" class="dropbox" data-is-active="true" ondrop="drop(event)"
+                ondragover="allowDrop(event)">
+                <div id="die1" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
+                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+                <div id="die2" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
+                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+                <div id="die3" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
+                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+                <div id="die4" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
+                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+                <div id="die5" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
+                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+            </div>
+            <div id="container2" class="dropbox" data-is-active="false" ondrop="drop(event)"
+                ondragover="allowDrop(event)"></div>
+            <button onclick="rollDice()">Roll dice!</button>
+
+            <!-- end #dice-fields -->
+        </div>
+
+        <!-- end #playingfield -->
+    </div>
+
+</body>
+
+</html>
