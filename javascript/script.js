@@ -8,7 +8,7 @@ const imgArray = [die1img, die2img, die3img, die4img, die5img, die6img];
 
 const game = {
     round: 1,
-    turn: 1,
+    turn: 0,
     scores: {
         enen: 0,
         tweeen: 0,
@@ -71,6 +71,7 @@ const normalizeDieSize = (ev) => {
 }
 
 const rollDice = () => {
+    if(game.turn >= 3) return;
     const diceList = document.getElementsByClassName("die");
         for (let i = 0; i < 5; i++) {
             let die = document.getElementById(diceList[i].id);
@@ -84,6 +85,14 @@ const rollDice = () => {
                 }, 1000); 
                 }
         }
+    game.turn++;
+    document.getElementById("turn").innerHTML=game.turn;
+    console.log(game.turn);
+    if(game.turn >= 3) handleScore();
+}
+
+const handleScore = () => {
+    console.log('Nu moeten we wat bedenken')
 }
 
 const addScore = (ev) => {
@@ -100,3 +109,4 @@ const updateScoreboard = () => {
 
 updateScoreboard();
 rollDice();
+
