@@ -5,6 +5,7 @@ const die4img = "url('./images/Alea_4.png')";
 const die5img = "url('./images/Alea_5.png')";
 const die6img = "url('./images/Alea_6.png')";
 const imgArray = [die1img, die2img, die3img, die4img, die5img, die6img];
+import scoreCard from './ScoreCard.js';
 
 const game = {
     round: 1,
@@ -31,6 +32,8 @@ const game = {
         totaalscore: 0
     }
 }
+
+// const possibilities = {};
 
 const drag = ev => {
     ev.dataTransfer.setData("text/plain", ev.target.id);
@@ -88,11 +91,24 @@ const rollDice = () => {
     game.turn++;
     document.getElementById("turn").innerHTML=game.turn;
     console.log(game.turn);
-    if(game.turn >= 3) handleScore();
+    handleScore();
+}
+
+const checkPossibilities = () => {
+    const thrown = [];
+    const diceList = document.getElementsByClassName("die");
+    for (let i = 0; i < 5; i++) {
+        //console.log(diceList[i].dataset.isActive);
+        if(diceList[i].dataset.isActive ==="false") thrown.push(diceList[i].dataset.value);
+    }
+    console.log(thrown);
 }
 
 const handleScore = () => {
-    console.log('Nu moeten we wat bedenken')
+    console.log('Nu moeten we wat bedenken');
+    console.log("Test: " + scoreCard.scores['enen']);
+    console.log("Turn: " + scoreCard.turn);
+    scoreCard.scores.enen++;
 }
 
 const addScore = (ev) => {
@@ -102,11 +118,34 @@ const addScore = (ev) => {
 const updateScoreboard = () => {
     for (let score in game.scores) {
         //console.log(game.scores[score]);
-        element = document.getElementById(score);
+        let element = document.getElementById(score);
         element.innerHTML = game.scores[score];
     }
 }
 
+const initializeEventlisteners = () => {
+    document.getElementById("throwButton").addEventListener("click", rollDice);
+    document.getElementById("checkButton").addEventListener("click", checkPossibilities);
+
+    let dice = document.querySelectorAll(".die");
+    dice.forEach(die => {
+        die.addEventListener("dragstart", drag);
+        die.addEventListener("mousedown", enlargeDieSize);
+        die.addEventListener("mouseup", normalizeDieSize);
+    })
+
+    let boxes = document.querySelectorAll(".dropbox");
+    // console.log(boxes);
+    boxes.forEach(box => {
+        box.addEventListener("drop", drop);
+        box.addEventListener("dragover", allowDrop);
+    })
+}
+
+// let scoreCard = new ScoreCard;
+// scoreCard.scores.enen = 5;
+// scoreCard.turn++;
+initializeEventlisteners();
 updateScoreboard();
 rollDice();
 

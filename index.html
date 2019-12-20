@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Drag</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./javascript/script.js" defer></script>
+    <script type="module" src="./javascript/script.js"></script>
 </head>
 
 <body>
-<h1>YAHTZEE!</h1>
+    <h1>YAHTZEE!</h1>
     <div id="playingfield">
 
         <div>
@@ -45,7 +45,8 @@
                     <td id="zessen"></td>
                 </tr>
                 <tr>
-                    <td></td><td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>Sub-totaal</td>
@@ -60,7 +61,8 @@
                     <td id="totaalboven"></td>
                 </tr>
                 <tr>
-                    <td></td><td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td id="threeoak-tag">Three-of-a-kind</td>
@@ -91,7 +93,8 @@
                     <td id="vrijekeus"></td>
                 </tr>
                 <tr>
-                    <td></td><td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>Totaal onder</td>
@@ -107,22 +110,17 @@
         <div id="dice-fields">
 
             <h3>Worp <span id="turn"></span></h3>
-            <div id="container1" class="dropbox" data-is-active="true" ondrop="drop(event)"
-                ondragover="allowDrop(event)">
-                <div id="die1" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
-                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
-                <div id="die2" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
-                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
-                <div id="die3" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
-                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
-                <div id="die4" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
-                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
-                <div id="die5" class="die" draggable="true" data-is-active="true" ondragstart="drag(event)"
-                    onmousedown="enlargeDieSize(event)" onmouseup="normalizeDieSize(event)"></div>
+            <div id="container1" class="dropbox" data-is-active="true">
+                <div id="die1" class="die" draggable="true" data-is-active="true"></div>
+                <div id="die2" class="die" draggable="true" data-is-active="true"></div>
+                <div id="die3" class="die" draggable="true" data-is-active="true"></div>
+                <div id="die4" class="die" draggable="true" data-is-active="true"></div>
+                <div id="die5" class="die" draggable="true" data-is-active="true"></div>
             </div>
-            <div id="container2" class="dropbox" data-is-active="false" ondrop="drop(event)"
-                ondragover="allowDrop(event)"></div>
-            <button onclick="rollDice()">Roll dice!</button>
+
+            <div id="container2" class="dropbox" data-is-active="false"></div>
+            <button type="button" id="throwButton">Gooi de stenen!</button><br>
+            <button type="button" id="checkButton">Wat kan ik?</button>
 
             <!-- end #dice-fields -->
         </div>
