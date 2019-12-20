@@ -7,31 +7,31 @@ const die6img = "url('./images/Alea_6.png')";
 const imgArray = [die1img, die2img, die3img, die4img, die5img, die6img];
 import scoreCard from './ScoreCard.js';
 
-const game = {
-    round: 1,
-    turn: 0,
-    scores: {
-        enen: 0,
-        tweeen: 0,
-        drieen: 0,
-        vieren: 0,
-        vijfen: 0,
-        zessen: 0,
-        fullhouse: 0,
-        threeoak: 0,
-        fouroak: 0,
-        fullhouse: 0,
-        kleinestraat: 0,
-        grotestraat: 0,
-        yahtzee: 0,
-        vrijekeus: 0,
-        subtotaalboven: 0,
-        bonus: 0,
-        totaalboven: 0,
-        subtotaalonder: 0,
-        totaalscore: 0
-    }
-}
+// const game = {
+//     round: 1,
+//     turn: 0,
+//     scores: {
+//         enen: 0,
+//         tweeen: 0,
+//         drieen: 0,
+//         vieren: 0,
+//         vijfen: 0,
+//         zessen: 0,
+//         fullhouse: 0,
+//         threeoak: 0,
+//         fouroak: 0,
+//         fullhouse: 0,
+//         kleinestraat: 0,
+//         grotestraat: 0,
+//         yahtzee: 0,
+//         vrijekeus: 0,
+//         subtotaalboven: 0,
+//         bonus: 0,
+//         totaalboven: 0,
+//         subtotaalonder: 0,
+//         totaalscore: 0
+//     }
+// }
 
 // const possibilities = {};
 
@@ -47,6 +47,10 @@ const drop = ev => {
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text/plain");
     let draggedNode = document.getElementById(data);
+    if(scoreCard.turn === 0) {
+        draggedNode.style.width = draggedNode.style.height = "40px";
+        return;
+    }
     if (ev.target.className === "dropbox") {
         let isInserted = false;
         let nodes = ev.target.children;
@@ -74,7 +78,7 @@ const normalizeDieSize = (ev) => {
 }
 
 const rollDice = () => {
-    if(game.turn >= 3) return;
+    if(scoreCard.turn >= 3) return;
     const diceList = document.getElementsByClassName("die");
         for (let i = 0; i < 5; i++) {
             let die = document.getElementById(diceList[i].id);
@@ -88,27 +92,27 @@ const rollDice = () => {
                 }, 1000); 
                 }
         }
-    game.turn++;
-    document.getElementById("turn").innerHTML=game.turn;
-    console.log(game.turn);
-    handleScore();
+    scoreCard.turn++;
+    document.getElementById("turn").innerHTML = scoreCard.turn;
+    
+    //handleScore();
 }
 
 const checkPossibilities = () => {
     const thrown = [];
     const diceList = document.getElementsByClassName("die");
-    for (let i = 0; i < 5; i++) {
-        //console.log(diceList[i].dataset.isActive);
-        if(diceList[i].dataset.isActive ==="false") thrown.push(diceList[i].dataset.value);
-    }
-    console.log(thrown);
+    for (let i = 0; i < 5; i++) thrown.push(diceList[i].dataset.value);
+    thrown.sort();
+    scoreCard.thrown = thrown;
+    scoreCard.checkPossibilities();
+    //console.log(scoreCard.possibilities.enen);
 }
 
 const handleScore = () => {
     console.log('Nu moeten we wat bedenken');
     console.log("Test: " + scoreCard.scores['enen']);
     console.log("Turn: " + scoreCard.turn);
-    scoreCard.scores.enen++;
+    //scoreCard.scores.enen++;
 }
 
 const addScore = (ev) => {
@@ -116,14 +120,14 @@ const addScore = (ev) => {
 }
 
 const updateScoreboard = () => {
-    for (let score in game.scores) {
+    for (let score in scoreCard.scores) {
         //console.log(game.scores[score]);
         let element = document.getElementById(score);
-        element.innerHTML = game.scores[score];
+        element.innerHTML = scoreCard.scores[score];
     }
 }
 
-const initializeEventlisteners = () => {
+const initializeGame = () => {
     document.getElementById("throwButton").addEventListener("click", rollDice);
     document.getElementById("checkButton").addEventListener("click", checkPossibilities);
 
@@ -132,20 +136,23 @@ const initializeEventlisteners = () => {
         die.addEventListener("dragstart", drag);
         die.addEventListener("mousedown", enlargeDieSize);
         die.addEventListener("mouseup", normalizeDieSize);
-    })
+        die.style.backgroundImage = imgArray[0];
+    });
 
     let boxes = document.querySelectorAll(".dropbox");
     // console.log(boxes);
     boxes.forEach(box => {
         box.addEventListener("drop", drop);
         box.addEventListener("dragover", allowDrop);
-    })
+    });
+
+
 }
 
 // let scoreCard = new ScoreCard;
 // scoreCard.scores.enen = 5;
 // scoreCard.turn++;
-initializeEventlisteners();
+initializeGame();
 updateScoreboard();
-rollDice();
+//rollDice();
 
