@@ -7,34 +7,6 @@ const die6img = "url('./images/Alea_6.png')";
 const imgArray = [die1img, die2img, die3img, die4img, die5img, die6img];
 import scoreCard from './ScoreCard.js';
 
-// const game = {
-//     round: 1,
-//     turn: 0,
-//     scores: {
-//         enen: 0,
-//         tweeen: 0,
-//         drieen: 0,
-//         vieren: 0,
-//         vijfen: 0,
-//         zessen: 0,
-//         fullhouse: 0,
-//         threeoak: 0,
-//         fouroak: 0,
-//         fullhouse: 0,
-//         kleinestraat: 0,
-//         grotestraat: 0,
-//         yahtzee: 0,
-//         vrijekeus: 0,
-//         subtotaalboven: 0,
-//         bonus: 0,
-//         totaalboven: 0,
-//         subtotaalonder: 0,
-//         totaalscore: 0
-//     }
-// }
-
-// const possibilities = {};
-
 const drag = ev => {
     ev.dataTransfer.setData("text/plain", ev.target.id);
 }
@@ -105,6 +77,16 @@ const checkPossibilities = () => {
     thrown.sort();
     scoreCard.thrown = thrown;
     scoreCard.checkPossibilities();
+    scoreCard.tags.forEach(tag=> {
+        console.log(tag);
+        let element = document.getElementById(tag);
+        if(scoreCard.scores[tag] === 0) {
+        element.innerHTML = scoreCard.possibilities[tag];
+        element.classList.add("possibility")
+    };
+    
+    });
+    
     //console.log(scoreCard.possibilities.enen);
 }
 
