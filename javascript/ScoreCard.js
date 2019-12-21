@@ -28,7 +28,7 @@ const scoreCard = {
     thrown: [],
     possibilities: {},
 
-    checkPossibilities: function() {
+    setPossibilities: function() {
 
         let totalCount = 0;
 
@@ -44,7 +44,7 @@ const scoreCard = {
         throwArray.push(this.thrown.filter(score => score === "5").length);
         throwArray.push(this.thrown.filter(score => score === "6").length);
 
-        console.log(throwArray);
+        // console.log(throwArray);
         // check upper half scorecard & count total score
         for (let i=0; i<6; i++) {
             let score = throwArray[i] * (i+1)
@@ -70,7 +70,7 @@ const scoreCard = {
 
         if (throwArray.includes(5)) this.possibilities.yahtzee = 50;
         this.possibilities.vrijekeus = totalCount;
-        console.log(this.possibilities);
+        // console.log(this.possibilities);
     }
     
 }
