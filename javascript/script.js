@@ -19,7 +19,7 @@ const drop = ev => {
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text/plain");
     let draggedNode = document.getElementById(data);
-    if(scoreCard.turn === 0) {
+    if (scoreCard.turn === 0) {
         draggedNode.style.width = draggedNode.style.height = "40px";
         return;
     }
@@ -50,23 +50,23 @@ const normalizeDieSize = (ev) => {
 }
 
 const rollDice = () => {
-    if(scoreCard.turn >= 3) return;
+    updateScoreboard();
+    if (scoreCard.turn >= 3) return;
     const diceList = document.getElementsByClassName("die");
-        for (let i = 0; i < 5; i++) {
-            let die = document.getElementById(diceList[i].id);
-            if(die.dataset.isActive === "true"){
-                let randomDie = Math.floor(Math.random() * 6);
-                die.style.backgroundImage = imgArray[randomDie];
-                die.dataset.value = randomDie + 1;
-                die.classList.add("rolldie");
-                setTimeout(() => {
-                    die.classList.remove("rolldie");
-                }, 1000); 
-                }
+    for (let i = 0; i < 5; i++) {
+        let die = document.getElementById(diceList[i].id);
+        if (die.dataset.isActive === "true") {
+            let randomDie = Math.floor(Math.random() * 6);
+            die.style.backgroundImage = imgArray[randomDie];
+            die.dataset.value = randomDie + 1;
+            die.classList.add("rolldie");
+            setTimeout(() => {
+                die.classList.remove("rolldie");
+            }, 1000);
         }
+    }
     scoreCard.turn++;
     document.getElementById("turn").innerHTML = scoreCard.turn;
-    
     //handleScore();
 }
 
@@ -76,29 +76,26 @@ const checkPossibilities = () => {
     for (let i = 0; i < 5; i++) thrown.push(diceList[i].dataset.value);
     thrown.sort();
     scoreCard.thrown = thrown;
-    scoreCard.checkPossibilities();
-    scoreCard.tags.forEach(tag=> {
-        console.log(tag);
+    scoreCard.setPossibilities();
+    scoreCard.tags.forEach(tag => {
+        // console.log(tag);
         let element = document.getElementById(tag);
-        if(scoreCard.scores[tag] === 0) {
-        element.innerHTML = scoreCard.possibilities[tag];
-        element.classList.add("possibility")
-    };
-    
+        if (scoreCard.scores[tag] === 0) {
+            element.innerHTML = scoreCard.possibilities[tag];
+            element.classList.add("possibility");
+            element.addEventListener("click", makeChoice);
+        };
+
     });
-    
-    //console.log(scoreCard.possibilities.enen);
+
 }
 
-const handleScore = () => {
-    console.log('Nu moeten we wat bedenken');
-    console.log("Test: " + scoreCard.scores['enen']);
-    console.log("Turn: " + scoreCard.turn);
-    //scoreCard.scores.enen++;
-}
-
-const addScore = (ev) => {
-    console.log(ev);
+const makeChoice = () => {
+    const tag = event.target.id;
+    scoreCard.scores[tag] = scoreCard.possibilities[tag];
+    scoreCard.turn = 0;
+    scoreCard.round++;
+    updateScoreboard();
 }
 
 const updateScoreboard = () => {
@@ -106,6 +103,8 @@ const updateScoreboard = () => {
         //console.log(game.scores[score]);
         let element = document.getElementById(score);
         element.innerHTML = scoreCard.scores[score];
+        element.classList.remove("possibility");
+        element.removeEventListener("click", makeChoice);
     }
 }
 
@@ -131,10 +130,8 @@ const initializeGame = () => {
 
 }
 
-// let scoreCard = new ScoreCard;
-// scoreCard.scores.enen = 5;
-// scoreCard.turn++;
+
 initializeGame();
 updateScoreboard();
-//rollDice();
+
 
