@@ -50,27 +50,26 @@ const normalizeDieSize = (ev) => {
 }
 
 const rollDice = () => {
-    updateScoreboard();
     if (scoreCard.turn >= 3) return;
-    const diceList = document.getElementsByClassName("die");
-    for (let i = 0; i < 5; i++) {
-        let die = document.getElementById(diceList[i].id);
-        if (die.dataset.isActive === "true") {
-            let randomDie = Math.floor(Math.random() * 6);
-            die.style.backgroundImage = imgArray[randomDie];
-            die.dataset.value = randomDie + 1;
-            die.classList.add("rolldie");
-            setTimeout(() => {
-                die.classList.remove("rolldie");
-            }, 1000);
-        }
-    }
     scoreCard.turn++;
-    document.getElementById("turn").innerHTML = scoreCard.turn;
+    updateScoreboard();
+    const diceList = container1.getElementsByClassName("die");
+    for (let i = 0; i < diceList.length; i++) {
+        let die = diceList[i];
+        let randomDie = Math.floor(Math.random() * 6);
+        die.style.backgroundImage = imgArray[randomDie];
+        die.dataset.value = randomDie + 1;
+        die.classList.add("rolldie");
+        setTimeout(() => {
+            die.classList.remove("rolldie");
+        }, 1000);
+        
+    }
     //handleScore();
 }
 
 const checkPossibilities = () => {
+    if(scoreCard.turn === 0) return;
     const thrown = [];
     const diceList = document.getElementsByClassName("die");
     for (let i = 0; i < 5; i++) thrown.push(diceList[i].dataset.value);
@@ -80,7 +79,7 @@ const checkPossibilities = () => {
     scoreCard.tags.forEach(tag => {
         // console.log(tag);
         let element = document.getElementById(tag);
-        if (scoreCard.scores[tag] === 0) {
+        if (scoreCard.scores[tag] === -1) {
             element.innerHTML = scoreCard.possibilities[tag];
             element.classList.add("possibility");
             element.addEventListener("click", makeChoice);
@@ -96,16 +95,41 @@ const makeChoice = () => {
     scoreCard.turn = 0;
     scoreCard.round++;
     updateScoreboard();
+    resetDice();
 }
 
 const updateScoreboard = () => {
+    document.getElementById("turn").innerHTML = scoreCard.turn;
+
+    let bovenScore = 0;
+    for (let i=0; i<6; i++) {
+        if (scoreCard.scores[scoreCard.tags[i]] >= 0) bovenScore += scoreCard.scores[scoreCard.tags[i]];
+    }
+    scoreCard.scores.subtotaalboven = bovenScore;
+    if (scoreCard.scores.subtotaalboven >= 63) scoreCard.scores.bonus = 35;
+    scoreCard.scores.totaalboven = scoreCard.scores.subtotaalboven + scoreCard.scores.bonus;
+
+    let onderScore = 0;
+    for (let i=6; i<14; i++) {
+        if (scoreCard.scores[scoreCard.tags[i]] >= 0) {
+            onderScore += scoreCard.scores[scoreCard.tags[i]];
+        }
+    }
+    scoreCard.scores.subtotaalonder = onderScore;
+    scoreCard.scores.totaalscore = scoreCard.scores.totaalboven + scoreCard.scores.subtotaalonder;
+
     for (let score in scoreCard.scores) {
-        //console.log(game.scores[score]);
         let element = document.getElementById(score);
-        element.innerHTML = scoreCard.scores[score];
+        element.innerHTML = (scoreCard.scores[score] === -1 ? '-' : scoreCard.scores[score]);
         element.classList.remove("possibility");
         element.removeEventListener("click", makeChoice);
     }
+}
+
+const resetDice = () => {
+    while (container2.hasChildNodes()) {  
+        container1.appendChild(container2.removeChild(container2.firstChild));
+      } 
 }
 
 const initializeGame = () => {
