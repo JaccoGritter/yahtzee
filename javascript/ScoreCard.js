@@ -1,24 +1,24 @@
 
 const scoreCard = {
     
-    tags: ["enen", "tweeen", "drieen", "vieren", "vijfen", "zessen", "fullhouse", "threeoak", "fouroak", "fullhouse", "kleinestraat", "grotestraat", "yahtzee", "vrijekeus"],
+    tags: ["enen", "tweeen", "drieen", "vieren", "vijfen", "zessen", "threeoak", "fouroak", "fullhouse", "kleinestraat", "grotestraat", "yahtzee", "vrijekeus"],
     round: 1,
     turn: 0,
     scores: {
-        enen: 0,
-        tweeen: 0,
-        drieen: 0,
-        vieren: 0,
-        vijfen: 0,
-        zessen: 0,
-        fullhouse: 0,
-        threeoak: 0,
-        fouroak: 0,
-        fullhouse: 0,
-        kleinestraat: 0,
-        grotestraat: 0,
-        yahtzee: 0,
-        vrijekeus: 0,
+        enen: -1,
+        tweeen: -1,
+        drieen: -1,
+        vieren: -1,
+        vijfen: -1,
+        zessen: -1,
+        fullhouse: -1,
+        threeoak: -1,
+        fouroak: -1,
+        fullhouse: -1,
+        kleinestraat: -1,
+        grotestraat: -1,
+        yahtzee: -1,
+        vrijekeus: -1,
         subtotaalboven: 0,
         bonus: 0,
         totaalboven: 0,
@@ -34,7 +34,7 @@ const scoreCard = {
 
         scoreCard.tags.forEach(tag => {
             this.possibilities[tag] = 0;
-        })
+        });
 
         const throwArray = [];
         throwArray.push(this.thrown.filter(score => score === "1").length);
@@ -57,20 +57,18 @@ const scoreCard = {
         if (throwArray.includes(3) || throwArray.includes(4) || throwArray.includes(5)) this.possibilities.threeoak = totalCount;
         if (throwArray.includes(4) || throwArray.includes(5)) this.possibilities.fouroak = totalCount;
 
-        if (throwArray.filter(score => score === 0 ).length === 2) {
-            if ((throwArray[0] === 0 && throwArray [1] === 0) || (throwArray[4] === 0 && throwArray [5] === 0) || (throwArray[0] === 0 && throwArray [5] === 0)) this.possibilities.kleinestraat = 30;
+        // create string of thrown numbers without duplicates to be able to check streets
+        let throwString = "";
+        for (let i=0; i<6; i++) {
+            if (throwArray[i] != 0) throwString += (i+1);
         }
 
-        if (throwArray.filter(score => score === 0 ).length === 1) {
-            if (throwArray[0] === 0 || throwArray [5] === 0) {
-                this.possibilities.kleinestraat = 30;
-                this.possibilities.grotestraat = 40;
-            }
-        }
+        if (throwString.includes("1234") || throwString.includes("2345") || throwString.includes("3456")) this.possibilities.kleinestraat = 30;
+
+        if (throwString.includes("12345") || throwString.includes("23456")) this.possibilities.grotestraat = 40;
 
         if (throwArray.includes(5)) this.possibilities.yahtzee = 50;
         this.possibilities.vrijekeus = totalCount;
-        // console.log(this.possibilities);
     }
     
 }
