@@ -65,7 +65,6 @@ const rollDice = () => {
         }, 1000);
         
     }
-    //handleScore();
 }
 
 const checkPossibilities = () => {
@@ -77,7 +76,6 @@ const checkPossibilities = () => {
     scoreCard.thrown = thrown;
     scoreCard.setPossibilities();
     scoreCard.tags.forEach(tag => {
-        // console.log(tag);
         let element = document.getElementById(tag);
         if (scoreCard.scores[tag] === -1) {
             element.innerHTML = scoreCard.possibilities[tag];
@@ -86,7 +84,6 @@ const checkPossibilities = () => {
         };
 
     });
-
 }
 
 const makeChoice = () => {
