@@ -28,7 +28,9 @@ const scoreCard = {
     thrown: [],
     possibilities: {},
 
-    setPossibilities() {
+    setPossibilities(thrown) {
+
+        this.thrown = thrown;
 
         let totalCount = 0;
 

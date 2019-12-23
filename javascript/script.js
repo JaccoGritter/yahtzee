@@ -72,8 +72,7 @@ const checkPossibilities = () => {
     const diceList = document.getElementsByClassName("die");
     for (let i = 0; i < 5; i++) thrown.push(diceList[i].dataset.value);
     thrown.sort();
-    scoreCard.thrown = thrown;
-    scoreCard.setPossibilities();
+    scoreCard.setPossibilities(thrown);
     scoreCard.tags.forEach(tag => {
         let element = document.getElementById(tag);
         if (scoreCard.scores[tag] === -1) {
@@ -81,7 +80,6 @@ const checkPossibilities = () => {
             element.classList.add("possibility");
             element.addEventListener("click", makeChoice);
         };
-
     });
 }
 
@@ -132,7 +130,7 @@ const resetDice = () => {
       }
 }
 
-const initializeGame = () => {
+const startGame = () => {
     document.getElementById("throwButton").addEventListener("click", rollDice);
     document.getElementById("checkButton").addEventListener("click", checkPossibilities);
 
@@ -150,6 +148,8 @@ const initializeGame = () => {
         box.addEventListener("drop", drop);
         box.addEventListener("dragover", allowDrop);
     });
+
+    updateScoreboard();
 }
 
 const endGame = () => {
@@ -158,7 +158,7 @@ const endGame = () => {
     document.getElementById("checkButton").removeEventListener("click", checkPossibilities);
 }
 
-initializeGame();
-updateScoreboard();
+startGame();
+
 
 
