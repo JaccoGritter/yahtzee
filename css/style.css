@@ -6,6 +6,11 @@ body {
     color: white;
 }
 
+h1 {
+    font-family: 'Gochi Hand', cursive;
+    font-size: 4rem;
+}
+
 #playingfield {
     width: 700px;
     margin: 0 auto;
