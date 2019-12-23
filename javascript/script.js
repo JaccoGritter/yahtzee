@@ -62,8 +62,7 @@ const rollDice = () => {
         die.classList.add("rolldie");
         setTimeout(() => {
             die.classList.remove("rolldie");
-        }, 1000);
-        
+        }, 1000);   
     }
 }
 
@@ -93,11 +92,15 @@ const makeChoice = () => {
     scoreCard.round++;
     updateScoreboard();
     resetDice();
+    if(scoreCard.round === 13) endGame();
 }
 
 const updateScoreboard = () => {
-    document.getElementById("turn").innerHTML = scoreCard.turn;
-
+    if (scoreCard.turn === 0) {
+        document.getElementById("turn").innerHTML = "Start de volgende beurt";
+    } else if (scoreCard.turn === 3) {
+        document.getElementById("turn").innerHTML = "Maak je keuze";
+    } else document.getElementById("turn").innerHTML = "Beurt " + scoreCard.turn;
     let bovenScore = 0;
     for (let i=0; i<6; i++) {
         if (scoreCard.scores[scoreCard.tags[i]] >= 0) bovenScore += scoreCard.scores[scoreCard.tags[i]];
@@ -126,7 +129,7 @@ const updateScoreboard = () => {
 const resetDice = () => {
     while (container2.hasChildNodes()) {  
         container1.appendChild(container2.removeChild(container2.firstChild));
-      } 
+      }
 }
 
 const initializeGame = () => {
@@ -147,10 +150,13 @@ const initializeGame = () => {
         box.addEventListener("drop", drop);
         box.addEventListener("dragover", allowDrop);
     });
-
-
 }
 
+const endGame = () => {
+    document.getElementById("turn").innerHTML = "Game Over!  Score: " + scoreCard.scores.totaalscore;
+    document.getElementById("throwButton").removeEventListener("click", rollDice);
+    document.getElementById("checkButton").removeEventListener("click", checkPossibilities);
+}
 
 initializeGame();
 updateScoreboard();
